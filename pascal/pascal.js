@@ -1,3 +1,9 @@
+// Variables
+
+const draw = document.getElementById("draw");
+const numberBox = document.getElementById('numberBox');
+const controls = document.getElementById('controlBox');
+
 // Functions
 
 const pascalTriangle = (rowsNum) => {
@@ -24,7 +30,6 @@ const drawTable = (number) => {
 // Fetch the value from input
 
 const fetcher = () => {
-    const numberBox = document.getElementById('numberBox');
     let numberBoxValue = numberBox.value;
     return numberBoxValue;
 }
@@ -32,18 +37,18 @@ const fetcher = () => {
 // Erase from the screen
 
 const eraser = () => {
-    const draw = document.getElementById('draw');
     let childNode = document.getElementById('result');
-    if (childNode !== null) {
+    let timer = document.getElementById('timer');
+    if (childNode !== null && timer !== null) {
         draw.removeChild(childNode);
-    }
+        controlBox.removeChild(timer);
+    };
 }
 
-// Draw on the screen
+// Draw result on the screen
 
 const drawer = () => {
     eraser();
-    const draw = document.getElementById("draw");
     const result = pascalTriangle(fetcher());
     const container = document.createElement('div');
     container.id = 'result';
@@ -55,5 +60,19 @@ const drawer = () => {
         let text = `${result[i]}`.toString().split(",").join(' ');
         let textValue = document.createTextNode(text);
         pTag.appendChild(textValue);
-    }
+    };
+}
+
+// Function runner with performance time
+
+const runner = () => {
+    let t0 = performance.now();
+    drawer();
+    let t1 = performance.now();
+    let timerResult = document.createElement('p');
+    timerResult.id = 'timer';
+    let timerResultText = `This function took ${t1 - t0} miliseconds.`;
+    let timerResultValue = document.createTextNode(timerResultText);
+    timerResult.appendChild(timerResultValue);
+    controlBox.appendChild(timerResult);
 }
