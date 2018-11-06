@@ -27,10 +27,6 @@ const clickHandlerForThird = () => {
     thirdImplementationClicked = true;
 }
 
-firstImplementation.addEventListener("click", clickHandlerForFirst);
-secondImplementation.addEventListener("click", clickHandlerForSecond);
-thirdImplementation.addEventListener("click", clickHandlerForThird);
-
 // First implementation
 
 const fibonacciFirst = (num) => {
@@ -73,12 +69,9 @@ const fetcher = () => {
 // Erase from the screen
 
 const eraser = () => {
-    let childNode = document.getElementById('result');
-    let timer = document.getElementById('timer');
-    if (childNode !== null && timer !== null) {
-        draw.removeChild(childNode);
-        controlBox.removeChild(timer);
-    };
+    while (draw.firstChild) {
+        draw.removeChild(draw.firstChild);
+    }
 }
 
 // Checks which button has been clicked
@@ -86,18 +79,14 @@ const eraser = () => {
 const letMeCheck = () => {
     if (firstImplementationClicked === true) {
         let returnValue = fibonacciFirst(fetcher());
-        console.log(fibonacciFirst(fetcher()));
-        console.log(`this is the first implementation.`);
         firstImplementationClicked = false;
         return returnValue;
     } else if (secondImplementationClicked === true) {
         let returnValue = fibonacciSecond(fetcher());
-        console.log(`this is the second implementation.`);
         secondImplementationClicked = false;
         return returnValue;
     } else if (thirdImplementationClicked === true) {
         let returnValue = fibonacciThird(fetcher());
-        console.log(`this is the third implementation.`);
         thirdImplementationClicked = false;
         return returnValue;
     } else {
@@ -120,7 +109,6 @@ const elementDrawer = (whatToDraw) => {
 // Draw the array from the first implementation
 
 const arrayDrawer = () => {
-    console.log(`drawing!`);
     eraser();
     fibonacciFirst(fetcher());
     let text = fibonacciFirstArray.toString().split(",").join(' ');
@@ -138,6 +126,7 @@ const implementationDrawer = () => {
 // Function runner with performance time
 
 const runner = () => {
+    eraser()
     let t0 = performance.now();
     implementationDrawer();
     let t1 = performance.now();
@@ -146,5 +135,26 @@ const runner = () => {
     let timerResultText = `This function took ${t1 - t0} miliseconds.`;
     let timerResultValue = document.createTextNode(timerResultText);
     timerResult.appendChild(timerResultValue);
-    controlBox.appendChild(timerResult);
+    draw.appendChild(timerResult);
 }
+
+// Let's handle all the stuff!
+
+firstImplementation.addEventListener("click", () => {
+    clickHandlerForFirst();
+    runner();
+});
+
+secondImplementation.addEventListener("click", () => {
+    clickHandlerForSecond();
+    runner();
+});
+
+thirdImplementation.addEventListener("click", () => {
+    clickHandlerForThird();
+    runner();
+});
+
+firstImplementationArray.addEventListener("click", () => {
+    arrayDrawer();
+})
