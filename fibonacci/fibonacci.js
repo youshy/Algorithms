@@ -4,22 +4,32 @@ const draw = document.getElementById("draw");
 const numberBox = document.getElementById('numberBox');
 const controls = document.getElementById('controlBox');
 const firstImplementation = document.getElementById('firstImplementation');
+const firstImplementationArray = document.getElementById('firstImplementationArray');
 const secondImplementation = document.getElementById('secondImplementation');
 const thirdImplementation = document.getElementById('thirdImplementation');
 let fibonacciFirstArray = [];
 
-// Clicker checker and also function
+// Clicker checker and also functions
 
-let firstImplementationClicked = 0;
-let secondImplementationClicked = 0;
-let thirdImplementationClicked = 0;
+let firstImplementationClicked = false;
+let secondImplementationClicked = false;
+let thirdImplementationClicked = false;
 
-const clickHandler = (value) => {
-    value = 1
-    console.log(`I've been clicked! Value ${value}`);
+const clickHandlerForFirst = () => {
+    firstImplementationClicked = true;
 }
 
+const clickHandlerForSecond = () => {
+    secondImplementationClicked = true;
+}
 
+const clickHandlerForThird = () => {
+    thirdImplementationClicked = true;
+}
+
+firstImplementation.addEventListener("click", clickHandlerForFirst);
+secondImplementation.addEventListener("click", clickHandlerForSecond);
+thirdImplementation.addEventListener("click", clickHandlerForThird);
 
 // First implementation
 
@@ -71,26 +81,65 @@ const eraser = () => {
     };
 }
 
-// Draw on the screen
+// Checks which button has been clicked
 
-const drawer = () => {
-    eraser();
-    fibonacciFirst(fetcher());
+const letMeCheck = () => {
+    if (firstImplementationClicked === true) {
+        let returnValue = fibonacciFirst(fetcher());
+        console.log(fibonacciFirst(fetcher()));
+        console.log(`this is the first implementation.`);
+        firstImplementationClicked = false;
+        return returnValue;
+    } else if (secondImplementationClicked === true) {
+        let returnValue = fibonacciSecond(fetcher());
+        console.log(`this is the second implementation.`);
+        secondImplementationClicked = false;
+        return returnValue;
+    } else if (thirdImplementationClicked === true) {
+        let returnValue = fibonacciThird(fetcher());
+        console.log(`this is the third implementation.`);
+        thirdImplementationClicked = false;
+        return returnValue;
+    } else {
+        console.log(`well, something went bad...`)
+    }
+}
+
+// Append element on the screen
+
+const elementDrawer = (whatToDraw) => {
     const container = document.createElement('div');
     container.id = 'result';
     draw.appendChild(container);
-    let pTag = document.createElement('p');
+    const pTag = document.createElement('p');
     container.appendChild(pTag);
-    let text = fibonacciFirstArray.toString().split(",").join(' ');
-    let textValue = document.createTextNode(text);
+    const textValue = document.createTextNode(whatToDraw);
     pTag.appendChild(textValue);
+}
+
+// Draw the array from the first implementation
+
+const arrayDrawer = () => {
+    console.log(`drawing!`);
+    eraser();
+    fibonacciFirst(fetcher());
+    let text = fibonacciFirstArray.toString().split(",").join(' ');
+    elementDrawer(text);
+}
+
+// Draw on the screen
+
+const implementationDrawer = () => {
+    eraser();
+    let text = letMeCheck();
+    elementDrawer(text);
 }
 
 // Function runner with performance time
 
 const runner = () => {
     let t0 = performance.now();
-    drawer();
+    implementationDrawer();
     let t1 = performance.now();
     let timerResult = document.createElement('p');
     timerResult.id = 'timer';
