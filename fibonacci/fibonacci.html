@@ -6,9 +6,16 @@
     <title>Fibonacci's Sequence</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-    <script src="fibonacci.js"></script>
 </head>
 <body>
-    
+    <div id="controlBox">
+        <a href="../index.html">Back</a>
+        <input id="numberBox" type="number" min=1 value=1>
+        <button id="firstImplementation" onclick="runner()">First implementation</button>
+        <button id="secondImplementation" onclick="runner()">Second implementation - shows only the element with given ID</button>
+        <button id="thirdImplementation" onclick="runner()">Third implementation - shows only the element with given ID</button>
+    </div>
+    <div id="draw"></div>
+    <script src="fibonacci.js"></script>
 </body>
 </html>
