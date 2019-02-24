@@ -11,7 +11,7 @@
 // Probability any item makes it into the second position:
 // = didn't make it into the first * makes it into the second
 // = (n-1)/(n) * 1/(n-1) = 1/n
-import { getRandom } from "./utils";
+import { getRandom } from "../utils/utils";
 
 function shuffleInPlace<T>(array: T[]): T[] {
   // if it's 1 or 0 items, just return the array
